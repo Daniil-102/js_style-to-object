@@ -7,16 +7,18 @@
  */
 function convertToObject(sourceString) {
   const objectOfStyles = {};
-  const stylesArray = sourceString.split(';');
 
-  for (let style of stylesArray) {
-    if (style.trim().length < 3) {
-      continue;
-    }
+  sourceString
+    .split(';')
+    .map((style) => style.trim())
+    .filter((style) => style.length > 3)
+    .forEach((style) => {
+      const [property, value] = style.split(':').map((part) => part.trim());
 
-    style = style.split(':').map((s) => s.trim());
-    objectOfStyles[style[0]] = style[1];
-  }
+      if (property && value) {
+        objectOfStyles[property] = value;
+      }
+    });
 
   return objectOfStyles;
 }
